@@ -31,7 +31,7 @@ while(resultSet.next()){
      meterid = resultSet.getString("meterID");
   }
 
-
+/*
 if(request.getParameter("month")!=null){
  
     out.println("alert('ssdd');");
@@ -41,7 +41,7 @@ while(resultSet2.next()){
         consumption = resultSet2.getString("consumption"); 
      }
 }
-
+*/
 
 
 %>
@@ -55,7 +55,7 @@ while(resultSet2.next()){
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Dashboard| Consumption</title>
+	<title>Electrical Consumption</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -198,7 +198,7 @@ while(resultSet2.next()){
             </div>
         </nav>
 
-<!---Start Consumption--->
+<!---Start Complaint--->
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -212,11 +212,12 @@ while(resultSet2.next()){
                             <div class="content">
                                 
                                     <div class="typo-line">
-                                        <form action="consumption.jsp" method='post'>
+                                        <form action="CoServlet" method='post'>
                                             
 
                                              <div>
                                                  <h5>For :</h5> <select name="month">
+                                                     <option disabled selected value> -- Select month-- </option>
                                                     <option value="1">January</option>
                                                     <option value="2">February</option>
                                                     <option value="3">March</option>
@@ -244,12 +245,23 @@ while(resultSet2.next()){
                                              <form>
                                              <div class='form-row'>
                                                  <div> <h5>Result :</h5>  <h4>Meter ID : <%=meterid%></h4>
+                                                         <% 
+                                                             if(request.getAttribute("consumpid")!=null){
+                                                             out.println("<h4>Consumption ID:"+request.getAttribute("consumpid")+"</h4>");
+                                                             }
+                                                             else 
+                                                                 out.println("<h4>Total Consumption: No Record </h4>");  
+                                                             out.println("<h4>Month:"+request.getAttribute("month")+"</h4>");
+                                                             if(request.getAttribute("consumption")!=null){
+                                                             out.println("<h4>Total Consumption:"+request.getAttribute("consumption")+"</h4>");  
+                                                             }
+                                                             else 
+                                                                 out.println("<h4>Total Consumption: No Record </h4>");  
+                                                             
                                                          
-                                                         <h4>Consumption ID: <%=consumpid%></h4>
+                                                       
                                                            
-                                                         <h4>Total Consumption: <%=consumption%></h4>
-                                                           
-                                                        
+                                                        %>
                                                  </div>
                
                                              </div>
@@ -308,7 +320,7 @@ while(resultSet2.next()){
 </body>
 
         <!--   Core JS Files   -->
-        <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
 	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 	<!--  Charts Plugin -->

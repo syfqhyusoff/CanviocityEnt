@@ -3,6 +3,9 @@
     Created on : Apr 12, 2018, 11:07:23 PM
     Author     : IMPOSSIBLEOO7
 --%>
+<%@page import="canviodb.dbcon"%>
+<%@page import="javax.ejb.EJB"%>
+
 <%@page language="java" session="true" %>
 <%@ page import ="java.sql.*" %>
 <%@ page import ="java.sql.Date" %>
@@ -10,8 +13,20 @@
 <%@ page import="com.google.gson.Gson"%>
 <%@ page import="com.google.gson.JsonObject"%>
 <%@include file="conn.jsp" %>
+
+<%
+
+Connection connection = null;
+Statement stmt= null;
+
+%>
+
+
+    
 <%-- query and data from database --%>
  <% 
+connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+"canviodb", "root", "");
+stmt=connection.createStatement();
             String meterid = null;
             String category= null;
             String city= null;
@@ -24,9 +39,10 @@
             String dataPoints = null;
             String performance=null;
 
-                Statement st = con.createStatement();
+            if(session.getAttribute("userid")!=null){
+                
                 ResultSet rs;
-                rs = st.executeQuery("select * from smartmeter where userID='"+ session.getAttribute("userid")+"';" );  
+                rs = stmt.executeQuery("select * from smartmeter where userID='"+ session.getAttribute("userid")+"';" );  
 
                 while(rs.next()){
                   meterid =  rs.getString("meterID");
@@ -37,7 +53,7 @@
 
             }
                 ResultSet rs2;
-                rs2 = st.executeQuery("select * from pelan where meterID='"+meterid+"' and status like 'active';" );  
+                rs2 = stmt.executeQuery("select * from pelan where meterID='"+meterid+"' and status like 'active';" );  
 
                 while(rs2.next()){
                 remainingplan = rs2.getDate("endDate");
@@ -46,13 +62,13 @@
                 }
                 
                 ResultSet rs3;
-                rs3 = st.executeQuery("select * from consumption where meterID='"+meterid+"';" );
+                rs3 = stmt.executeQuery("select * from consumption where meterID='"+meterid+"';" );
                 while(rs3.next()){
                 consump = rs3.getDouble("consumption");
                 }
                 
                  ResultSet rs4;
-                rs4 = st.executeQuery("select consumption ,(CASE "+ 
+                rs4 = stmt.executeQuery("select consumption ,(CASE "+ 
                         "WHEN month(dateTime)=1 THEN 'January' " + 
                         "WHEN month(dateTime)=2 THEN 'February'" +
                         "WHEN month(dateTime)=3 THEN 'March'" +
@@ -84,7 +100,7 @@
                 String xVal, yVal;
                 ResultSet rs5;
 
-                        rs5 = st.executeQuery("select consumption ,(CASE "+ 
+                        rs5 = stmt.executeQuery("select consumption ,(CASE "+ 
                         "WHEN month(dateTime)=1 THEN 'January' " + 
                         "WHEN month(dateTime)=2 THEN 'February'" +
                         "WHEN month(dateTime)=3 THEN 'March'" +
@@ -110,11 +126,11 @@
                     
                      
                 ResultSet rs6;
-                rs6 = st.executeQuery("select * from smartmeter where meterID='"+meterid+"';" );
+                rs6 = stmt.executeQuery("select * from smartmeter where meterID='"+meterid+"';" );
                 while(rs6.next()){
                 performance = rs6.getString("performance");
                 }
-             
+            } 
          %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -362,7 +378,7 @@ out.println("<h3 align='center' style='margin:auto;'> Fair !</h3><div align='cen
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
                 
                 </div>
 
