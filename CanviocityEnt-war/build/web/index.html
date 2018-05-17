@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Canviocity</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300'>
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+  <link rel="stylesheet" href="css/style.css">
+      
+    <!--Registration alert-->
+    <script type="text/javascript">
+    function alertName(){
+    alert("You have been successfully registered ! Login now to start.");
+    } 
+    </script> 
+  
+    <!--Check username availability-->
+        <script type="text/javascript">
+        function loadXMLDoc(){
+        var xmlhttp;
+        var k=document.getElementById("uname").value;
+        var urls="exists.jsp?uname="+k;
+
+        if (window.XMLHttpRequest){
+         xmlhttp=new XMLHttpRequest();
+        }else{
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function() {
+             if (xmlhttp.readyState==4){
+        document.getElementById("err").innerHTML=xmlhttp.responseText;
+         }
+        }
+        xmlhttp.open("GET",urls,true);
+        xmlhttp.send();
+        }
+        </script>
+        
+        <!-- Check Smart meter availability-->
+        <script type="text/javascript">
+        function loadXMLDoc1(){
+        var xmlhttp;
+        var k=document.getElementById("meterID").value;
+        var urls="checkMeter.jsp?meterID="+k;
+
+        if (window.XMLHttpRequest){
+         xmlhttp=new XMLHttpRequest();
+            }else {
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function(){
+        if (xmlhttp.readyState==4){
+        document.getElementById("er1").innerHTML=xmlhttp.responseText;
+         }
+     }
+        xmlhttp.open("GET",urls,true);
+        xmlhttp.send();
+        }
+</script>
+  
+</head>
+
+<body>
+
+  <div class="cotn_principal">
+<div class="cont_centrar">
+
+  <div class="cont_login">
+<div class="cont_info_log_sign_up">
+      <div class="col_md_login">
+<div class="cont_ba_opcitiy">
+        
+        <h2>LOGIN</h2>  
+  <p>Welcome to Canviocity</p> 
+  <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+  </div>
+  </div>
+<div class="col_md_sign_up">
+<div class="cont_ba_opcitiy">
+  <h2>SIGN UP</h2>
+
+  
+  <p>First time login ? Register here</p>
+
+  <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
+</div>
+  </div>
+       </div>
+
+    
+    <div class="cont_back_info">
+       <div class="cont_img_back_grey">
+       <img src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d" alt="" />
+       </div>
+       
+    </div>
+<div class="cont_forms" >
+    <div class="cont_img_back_">
+       <img src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d" alt="" />
+       </div>
+    <!--Login box-->
+ <div class="cont_form_login">
+<form method="post" action="login.jsp"><i class="material-icons">&#xE5C4;</i>
+   <h2>LOGIN</h2>
+ <input type="text" placeholder="Username" name="uname" required/>
+<input type="password" placeholder="Password" name="pass" required />
+<button class="btn_login">LOGIN</button>
+  </form>  
+ </div>
+    
+    <!--Sign Up box-->
+   <div class="cont_form_sign_up">
+<form method="post" action="registration.jsp" onsubmit="alertName();" ><i class="material-icons">&#xE5C4;</i>
+     <h2>SIGN UP</h2>
+<input type="text" placeholder="Smart Meter ID" name="meterID" id="meterID" onkeyup="loadXMLDoc1()">
+<p><span id="er1"> </span></p>
+<input type="text" placeholder="Full Name" name="name" required/>
+<input type="email" placeholder="Email" name="email" required/>
+<input type="number" placeholder="Phone Number" name="phonenum" min="0" required/>
+<input type="text" placeholder="Address" name="address" required/>
+<input type="number" placeholder="Postcode" name="postcode" min="0" required/>
+<input type="text" placeholder="City" name="City" required/>
+<input type="text" placeholder="State" name="Negeri" required/>
+<input type="text" placeholder="Username" name="uname" id="uname" required onkeyup="loadXMLDoc()"/>
+<p><span id="err"></span></p>
+<input type="password" placeholder="Password" name="pass" required/>
+<button class="btn_sign_up">SIGN UP</button>
+</form>
+  </div>
+
+    </div>
+    
+  </div>
+ </div>
+</div>
+  
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>
